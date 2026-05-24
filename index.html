@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAGRPO: Boosting GRPO on Image-to-Video Generation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+            color: #1f2937;
+        }
+        
+        .video-container {
+            position: relative;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            background: #000;
+            aspect-ratio: 16/9;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .method-label {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            backdrop-filter: blur(2px);
+            z-index: 10;
+        }
+
+        .prompt-box {
+            background-color: #eef2ff;
+            border-left: 4px solid #4f46e5;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .model-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            color: #334155;
+            font-weight: 700;
+            font-size: 1.125rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header / Title Section -->
+    <header class="max-w-5xl mx-auto pt-16 pb-8 px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-6">
+            TAGRPO: Boosting GRPO on Image-to-Video Generation with Direct Trajectory Alignment
+        </h1>
+        
+        <div class="flex flex-wrap justify-center gap-4 text-lg text-slate-600 mb-8">
+            <span>Anonymous Authors</span>
+            <span class="hidden md:inline">•</span>
+            <span>Anonymous Institution</span>
+        </div>
+    </header>
+
+    <!-- Abstract Section -->
+    <section class="max-w-4xl mx-auto px-4 mb-16">
+        <h2 class="text-2xl font-bold mb-4 border-b pb-2">Abstract</h2>
+        <p class="text-slate-700 leading-relaxed text-justify">
+            Recent studies have demonstrated the efficacy of integrating Group Relative Policy Optimization (GRPO) into flow matching models, particularly for text-to-image and text-to-video generation. However, we find that directly applying these techniques to image-to-video (I2V) models often fails to yield consistent reward improvements. To address this limitation, we present TAGRPO, a robust post-training framework for I2V models inspired by contrastive learning. Our approach is grounded in the observation that rollout videos generated from identical initial noise provide superior guidance for optimization. Leveraging this insight, we propose a novel GRPO loss applied to intermediate latents, encouraging direct alignment with high-reward trajectories while maximizing distance from low-reward counterparts. Furthermore, we introduce a memory bank for rollout videos to enhance diversity and reduce computational overhead. Despite its simplicity, TAGRPO achieves significant improvements over DanceGRPO in I2V generation. 
+        </p>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="max-w-6xl mx-auto px-4 mb-20">
+        <h2 class="text-3xl font-bold text-center mb-12">Qualitative Comparisons</h2>
+        
+        <!-- Comparison Row 1 -->
+        <div class="mb-20">
+            <!-- Model Name Header -->
+            <div class="model-header">
+                <i class="fas fa-layer-group mr-2 text-indigo-600"></i>
+                Base Model: Wan 2.2
+            </div>
+
+            <div class="prompt-box">
+                <span class="font-bold text-indigo-700">Prompt:</span> 
+               A girl with long black hair, wearing a white dress and having large, translucent wings, is seen speaking while floating in a dark environment with vertical blue lines in the background. She then starts to move her wings and begins to fly, turning her body to the side as she does so. While flying, she looks to her left and continues to speak.
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Video 1: Base -->
+                <div class="video-container">
+                    <span class="method-label">Base (Wan 2.2)</span>
+                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample1-Wan2.2.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <!-- Video 2: Base + DanceGRPO -->
+                <div class="video-container">
+                    <span class="method-label">+ DanceGRPO</span>
+                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample1-WAN2.2+DANCEGRPO.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <!-- Video 3: Base + TAGRPO -->
+                <div class="video-container border-2 border-indigo-500">
+                    <span class="method-label bg-indigo-600">+ TAGRPO (Ours)</span>
+                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample1-WAN2.2+TAGRPO.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Row 2 -->
+        <div class="mb-20">
+            <!-- Model Name Header -->
+            <div class="model-header">
+                <i class="fas fa-layer-group mr-2 text-indigo-600"></i>
+                Base Model: Wan 2.2
+            </div>
+
+            <div class="prompt-box">
+                <span class="font-bold text-indigo-700">Prompt:</span> 
+                A white creature with a fur collar and a black coat is seen looking at a large orange tentacle in front of it. The creature then turns its head to face the camera, revealing a wide grin with sharp teeth. Finally, the creature begins to turn its body to face the camera directly. The background consists of a rocky, mountainous terrain with a clear blue sky.
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container">
+                    <span class="method-label">Base (Wan 2.2)</span>
+                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
+                        <source src="assets/Sample2-Wan2.2.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="video-container">
+                    <span class="method-label">+ DanceGRPO</span>
+                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
+                        <source src="assets/Sample2-WAN2.2+DANCEGRPO.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="video-container border-2 border-indigo-500">
+                    <span class="method-label bg-indigo-600">+ TAGRPO (Ours)</span>
+                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
+                        <source src="assets/Sample2-WAN2.2+TAGRPO.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Row 3 -->
+        <div class="mb-20">
+            <!-- Model Name Header -->
+            <div class="model-header">
+                <i class="fas fa-layer-group mr-2 text-indigo-600"></i>
+                Base Model: HunyuanVideo 1.5
+            </div>
+
+            <div class="prompt-box">
+                <span class="font-bold text-indigo-700">Prompt:</span> 
+                Two women are lying on a beach with a scenic background of cliffs and the sea. The blonde woman, wearing a watch on her left wrist, shows her hand to the brunette woman, who is wearing a red bikini. The brunette woman adjusts her hair with her right hand while looking at the blonde woman's hand. The brunette woman then uses her right hand to touch and interact with the watch on the blonde woman's wrist.
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container">
+                    <span class="method-label">Base (Hunyuan 1.5)</span>
+                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                        <source src="assets/Sample3-HY1.5.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="video-container">
+                    <span class="method-label">+ DanceGRPO</span>
+                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                        <source src="assets/Sample3-HY1.5+DANCEGRPO.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="video-container border-2 border-indigo-500">
+                    <span class="method-label bg-indigo-600">+ TAGRPO (Ours)</span>
+                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                        <source src="assets/Sample3-HY1.5+TAGRPO.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Row 4 -->
+        <div class="mb-20">
+            <!-- Model Name Header -->
+            <div class="model-header">
+                <i class="fas fa-layer-group mr-2 text-indigo-600"></i>
+                Base Model: HunyuanVideo 1.5
+            </div>
+
+            <div class="prompt-box">
+                <span class="font-bold text-indigo-700">Prompt:</span> 
+                The scene begins with a view of a control panel with illuminated buttons and a chair in front of it, set against a backdrop of a large, complex machine visible through a window. As the camera moves to the right, the control panel and chair remain in view, while the machine in the background becomes more detailed, showing various mechanical components and lights. A small control unit with green and red lights comes into focus on the right side of the frame, with the machine's intricate parts and a glowing orange light becoming more prominent. The camera continues to pan right, bringing the control unit into clearer view, while the machine's background shows more detailed machinery and the glowing orange light. The final frames focus on the control unit, highlighting its various buttons and lights, with the machine's complex background still visible.
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container">
+                    <span class="method-label">Base (Hunyuan 1.5)</span>
+                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                        <source src="assets/Sample4-HY1.5.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="video-container">
+                    <span class="method-label">+ DanceGRPO</span>
+                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                        <source src="assets/Sample4-HY1.5+DANCEGRPO.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="video-container border-2 border-indigo-500">
+                    <span class="method-label bg-indigo-600">+ TAGRPO (Ours)</span>
+                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                        <source src="assets/Sample4-HY1.5+TAGRPO.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <footer class="text-center py-8 text-slate-500 text-sm">
+        &copy; 2025 TAGRPO Project. All rights reserved.
+    </footer>
+
+</body>
+</html>
