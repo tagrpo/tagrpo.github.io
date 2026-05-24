@@ -28,40 +28,47 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            pointer-events: none;
+        }
+
+        .base {
+            border: 2px solid #cbd5e1;
+        }
+
+        .dancegrpo {
+            border: 2px solid #64748b;
+        }
+
+        .tagrpo {
+            border: 2px solid #4f46e5;
         }
 
         .method-label {
             position: absolute;
             top: 8px;
             left: 8px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
+            background: rgba(15, 23, 42, 0.8);
+            color: #fff;
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 0.75rem;
             font-weight: 600;
-            backdrop-filter: blur(2px);
+            letter-spacing: 0.01em;
             z-index: 10;
         }
 
         .prompt-box {
             background-color: #eef2ff;
             border-left: 4px solid #4f46e5;
-            padding: 1rem;
-            margin-bottom: 1rem;
+            padding: 0.875rem 1rem;
             border-radius: 0 0.5rem 0.5rem 0;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
-        .model-header {
-            display: flex;
+        .section-divider {
             align-items: center;
-            margin-bottom: 0.5rem;
-            color: #334155;
-            font-weight: 700;
-            font-size: 1.125rem;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 0.5rem;
+            display: flex;
         }
     </style>
 </head>
@@ -105,162 +112,457 @@
         </p>
     </section>
 
-    <!-- Comparison Section -->
-    <section class="max-w-6xl mx-auto px-4 mb-20">
-        <h2 class="text-3xl font-bold text-center mb-12">Qualitative Comparisons</h2>
-        
-        <!-- Comparison Row 1 -->
-        <div class="mb-20">
-            <!-- Model Name Header -->
-            <div class="model-header">
-                <i class="fas fa-layer-group mr-2 text-indigo-600"></i>
-                Base Model: Wan 2.2
-            </div>
+    <main class="max-w-7xl mx-auto px-4 pb-16 space-y-6">
+        <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-8">
+            <a href="#qualitative" class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 ease-in-out text-center">
+                Qualitative Comparisons
+            </a>
+            <a href="#more-vis" class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 ease-in-out text-center">
+                More I2V Visualization Comparisons
+            </a>
+            <a href="#ablation" class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 ease-in-out text-center">
+                Ablation Study on <span class="italic font-serif">&gamma;</span>
+            </a>
+        </div>
 
+        <div id="qualitative" class="section-divider py-8 sm:py-12">
+            <div class="flex-grow border-t-4 border-gray-800 rounded-full"></div>
+            <span class="flex-shrink-0 mx-4 sm:mx-6 text-gray-800 text-xl sm:text-2xl font-bold text-center">Qualitative Comparisons</span>
+            <div class="flex-grow border-t-4 border-gray-800 rounded-full"></div>
+        </div>
+
+        <section class="space-y-3">
             <div class="prompt-box">
-                <span class="font-bold text-indigo-700">Prompt:</span> 
-               A girl with long black hair, wearing a white dress and having large, translucent wings, is seen speaking while floating in a dark environment with vertical blue lines in the background. She then starts to move her wings and begins to fly, turning her body to the side as she does so. While flying, she looks to her left and continues to speak.
+                <span class="font-bold text-indigo-700">Base Model: Wan 2.2. Prompt:</span>
+                A girl with long black hair, wearing a white dress and having large, translucent wings, is seen speaking while floating in a dark environment with vertical blue lines in the background. She then starts to move her wings and begins to fly, turning her body to the side as she does so. While flying, she looks to her left and continues to speak.
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <!-- Video 1: Base -->
-                <div class="video-container">
-                    <span class="method-label">Base (Wan 2.2)</span>
-                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                <div class="video-container base">
+                    <span class="method-label">Base</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
                         <source src="assets/Sample1-Wan2.2.mp4" type="video/mp4">
                     </video>
                 </div>
-
-                <!-- Video 2: Base + DanceGRPO -->
-                <div class="video-container">
-                    <span class="method-label">+ DanceGRPO</span>
-                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                <div class="video-container dancegrpo">
+                    <span class="method-label">DanceGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
                         <source src="assets/Sample1-WAN2.2+DANCEGRPO.mp4" type="video/mp4">
                     </video>
                 </div>
-
-                <!-- Video 3: Base + TAGRPO -->
-                <div class="video-container border-2 border-indigo-500">
-                    <span class="method-label bg-indigo-600">+ TAGRPO (Ours)</span>
-                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                <div class="video-container tagrpo">
+                    <span class="method-label">TAGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
                         <source src="assets/Sample1-WAN2.2+TAGRPO.mp4" type="video/mp4">
                     </video>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Comparison Row 2 -->
-        <div class="mb-20">
-            <!-- Model Name Header -->
-            <div class="model-header">
-                <i class="fas fa-layer-group mr-2 text-indigo-600"></i>
-                Base Model: Wan 2.2
-            </div>
-
+        <section class="space-y-3">
             <div class="prompt-box">
-                <span class="font-bold text-indigo-700">Prompt:</span> 
+                <span class="font-bold text-indigo-700">Base Model: Wan 2.2. Prompt:</span>
                 A white creature with a fur collar and a black coat is seen looking at a large orange tentacle in front of it. The creature then turns its head to face the camera, revealing a wide grin with sharp teeth. Finally, the creature begins to turn its body to face the camera directly. The background consists of a rocky, mountainous terrain with a clear blue sky.
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="video-container">
-                    <span class="method-label">Base (Wan 2.2)</span>
-                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
+                <div class="video-container base">
+                    <span class="method-label">Base</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
                         <source src="assets/Sample2-Wan2.2.mp4" type="video/mp4">
                     </video>
                 </div>
-
-                <div class="video-container">
-                    <span class="method-label">+ DanceGRPO</span>
-                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
+                <div class="video-container dancegrpo">
+                    <span class="method-label">DanceGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
                         <source src="assets/Sample2-WAN2.2+DANCEGRPO.mp4" type="video/mp4">
                     </video>
                 </div>
-
-                <div class="video-container border-2 border-indigo-500">
-                    <span class="method-label bg-indigo-600">+ TAGRPO (Ours)</span>
-                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
+                <div class="video-container tagrpo">
+                    <span class="method-label">TAGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
                         <source src="assets/Sample2-WAN2.2+TAGRPO.mp4" type="video/mp4">
                     </video>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Comparison Row 3 -->
-        <div class="mb-20">
-            <!-- Model Name Header -->
-            <div class="model-header">
-                <i class="fas fa-layer-group mr-2 text-indigo-600"></i>
-                Base Model: HunyuanVideo 1.5
-            </div>
-
+        <section class="space-y-3">
             <div class="prompt-box">
-                <span class="font-bold text-indigo-700">Prompt:</span> 
+                <span class="font-bold text-indigo-700">Base Model: HunyuanVideo 1.5. Prompt:</span>
                 Two women are lying on a beach with a scenic background of cliffs and the sea. The blonde woman, wearing a watch on her left wrist, shows her hand to the brunette woman, who is wearing a red bikini. The brunette woman adjusts her hair with her right hand while looking at the blonde woman's hand. The brunette woman then uses her right hand to touch and interact with the watch on the blonde woman's wrist.
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="video-container">
-                    <span class="method-label">Base (Hunyuan 1.5)</span>
-                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                <div class="video-container base">
+                    <span class="method-label">Base</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
                         <source src="assets/Sample3-HY1.5.mp4" type="video/mp4">
                     </video>
                 </div>
-
-                <div class="video-container">
-                    <span class="method-label">+ DanceGRPO</span>
-                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                <div class="video-container dancegrpo">
+                    <span class="method-label">DanceGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
                         <source src="assets/Sample3-HY1.5+DANCEGRPO.mp4" type="video/mp4">
                     </video>
                 </div>
-
-                <div class="video-container border-2 border-indigo-500">
-                    <span class="method-label bg-indigo-600">+ TAGRPO (Ours)</span>
-                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                <div class="video-container tagrpo">
+                    <span class="method-label">TAGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
                         <source src="assets/Sample3-HY1.5+TAGRPO.mp4" type="video/mp4">
                     </video>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Comparison Row 4 -->
-        <div class="mb-20">
-            <!-- Model Name Header -->
-            <div class="model-header">
-                <i class="fas fa-layer-group mr-2 text-indigo-600"></i>
-                Base Model: HunyuanVideo 1.5
-            </div>
-
+        <section class="space-y-3">
             <div class="prompt-box">
-                <span class="font-bold text-indigo-700">Prompt:</span> 
+                <span class="font-bold text-indigo-700">Base Model: HunyuanVideo 1.5. Prompt:</span>
                 The scene begins with a view of a control panel with illuminated buttons and a chair in front of it, set against a backdrop of a large, complex machine visible through a window. As the camera moves to the right, the control panel and chair remain in view, while the machine in the background becomes more detailed, showing various mechanical components and lights. A small control unit with green and red lights comes into focus on the right side of the frame, with the machine's intricate parts and a glowing orange light becoming more prominent. The camera continues to pan right, bringing the control unit into clearer view, while the machine's background shows more detailed machinery and the glowing orange light. The final frames focus on the control unit, highlighting its various buttons and lights, with the machine's complex background still visible.
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="video-container">
-                    <span class="method-label">Base (Hunyuan 1.5)</span>
-                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                <div class="video-container base">
+                    <span class="method-label">Base</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
                         <source src="assets/Sample4-HY1.5.mp4" type="video/mp4">
                     </video>
                 </div>
-
-                <div class="video-container">
-                    <span class="method-label">+ DanceGRPO</span>
-                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                <div class="video-container dancegrpo">
+                    <span class="method-label">DanceGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
                         <source src="assets/Sample4-HY1.5+DANCEGRPO.mp4" type="video/mp4">
                     </video>
                 </div>
-
-                <div class="video-container border-2 border-indigo-500">
-                    <span class="method-label bg-indigo-600">+ TAGRPO (Ours)</span>
-                    <video autoplay loop muted playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                <div class="video-container tagrpo">
+                    <span class="method-label">TAGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
                         <source src="assets/Sample4-HY1.5+TAGRPO.mp4" type="video/mp4">
                     </video>
                 </div>
             </div>
+        </section>
+
+        <div id="more-vis" class="section-divider py-8 sm:py-12">
+            <div class="flex-grow border-t-4 border-gray-800 rounded-full"></div>
+            <span class="flex-shrink-0 mx-4 sm:mx-6 text-gray-800 text-xl sm:text-2xl font-bold text-center">More I2V Visualization Comparisons</span>
+            <div class="flex-grow border-t-4 border-gray-800 rounded-full"></div>
         </div>
 
-    </section>
+        <section class="space-y-3">
+            <div class="prompt-box">
+                Prompt: In a room with a red chair, a framed picture of a spider on the wall, and various objects including a small TV with a doll, a man stands with his arms crossed between two Minions. The Minion on the left holds a megaphone with a red light, while the Minion on the right wears an orange hat and scarf. The man uncrosses his arms and grabs the megaphone from the left Minion. He examines the megaphone briefly before starting to walk away. The Minions watch him as he moves towards the left side of the room.
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container base">
+                    <span class="method-label">Base</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample5Base.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container dancegrpo">
+                    <span class="method-label">DanceGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample5Dance.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container tagrpo">
+                    <span class="method-label">TAGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample5TA.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3">
+            <div class="prompt-box">
+                Prompt: In a room with red walls and ornate decorations, a man in gray armor is seated on a throne with a red carpeted staircase in front of him. A man in an orange outfit with intricate designs on his back approaches the throne, gradually getting closer with each step. The seated man remains still, watching the approaching man intently.
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container base">
+                    <span class="method-label">Base</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample1Base.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container dancegrpo">
+                    <span class="method-label">DanceGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample1Dance.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container tagrpo">
+                    <span class="method-label">TAGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample1TA.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3">
+            <div class="prompt-box">
+                Prompt: The video shows a clownfish swimming towards a sea anemone in an underwater environment with a purple and green background. The clownfish continues to move closer to the anemone, and the anemone's tentacles start to rise. The clownfish begins to swim into the anemone, and the tentacles continue to lift. The clownfish fully enters the anemone, and the tentacles surround it. The clownfish moves deeper into the anemone, and the tentacles cover most of its body. The clownfish starts to rise within the anemone, and the tentacles begin to lower. The clownfish continues to ascend, and the tentacles start to relax. The clownfish reaches the top of the anemone, and the tentacles are almost fully relaxed.
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container base">
+                    <span class="method-label">Base</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample4Base.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container dancegrpo">
+                    <span class="method-label">DanceGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample4Dance.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container tagrpo">
+                    <span class="method-label">TAGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample4TA.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3">
+            <div class="prompt-box">
+                Prompt: A man in a purple uniform with a cape stands in the center, surrounded by several other uniformed individuals. Two soldiers begin to escort a girl in a red outfit towards the man. The soldiers continue to bring the girl closer to the man, who remains stationary and observing the situation. More soldiers join the scene, surrounding the girl and the man. The girl is now fully surrounded by the soldiers, who appear to be securing her.
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container base">
+                    <span class="method-label">Base</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                        <source src="assets/Sample3Base.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container dancegrpo">
+                    <span class="method-label">DanceGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                        <source src="assets/Sample3Dance.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container tagrpo">
+                    <span class="method-label">TAGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                        <source src="assets/Sample3TA.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3">
+            <div class="prompt-box">
+                Prompt: A small creature with white fur, red shoes, and a red scarf stands on a stone-paved area with a mountainous background. A boy with black hair, wearing a gray and red outfit, runs up to the creature and stops beside it, looking at it and talking. A girl with orange hair, wearing a yellow coat and blue pants, walks up and stands next to the boy, looking at the creature. The creature closes its eyes and appears to be speaking. The girl covers her mouth with her hand and seems to be saying something. The boy and the girl then turn their heads to look in the same direction as the creature.
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container base">
+                    <span class="method-label">Base</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
+                        <source src="assets/Sample2Base.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container dancegrpo">
+                    <span class="method-label">DanceGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
+                        <source src="assets/Sample2Dance.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container tagrpo">
+                    <span class="method-label">TAGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
+                        <source src="assets/Sample2TA.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3">
+            <div class="prompt-box">
+                Prompt: A woman, wearing a yellow and white striped sweater, holds up a colorful striped shirt with a red tongue logo on it, showing it to the camera while talking. She adjusts the shirt, displaying it from different angles. She then looks at the shirt's tag, removes it, and continues to talk while gesturing with her hand. The background includes a desk with sunflowers, makeup brushes, and framed pictures.
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container base">
+                    <span class="method-label">Base</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample9Base.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container dancegrpo">
+                    <span class="method-label">DanceGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample9Dance.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container tagrpo">
+                    <span class="method-label">TAGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample9TA.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3">
+            <div class="prompt-box">
+                Prompt: A woman wearing a white sun hat and a blue dress with pink trim is standing in a green, outdoor setting with trees and grass in the background. She smiles and holds the brim of her hat with both hands, swaying her body slightly. She continues to smile and adjust her hat, moving her hands around the brim. The woman then starts to walk forward while still holding the hat and swaying her body. Finally, she adjusts the hat by lifting it slightly and positioning it on her head.
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container base">
+                    <span class="method-label">Base</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample8Base.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container dancegrpo">
+                    <span class="method-label">DanceGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample8Dance.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container tagrpo">
+                    <span class="method-label">TAGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample8TA.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3">
+            <div class="prompt-box">
+                Prompt: A young girl with curly hair, wearing a green jacket and a pink backpack, is sitting in the front passenger seat of a car. She opens the car door and begins to exit, still hugging herself. The girl steps out of the car and turns to look at the man sitting in the driver's seat. The man, who has a beard, waves at her and gently touches her head. The girl then turns and walks towards a nearby gate, where other children with backpacks are also heading.
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container base">
+                    <span class="method-label">Base</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample6Base.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container dancegrpo">
+                    <span class="method-label">DanceGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample6Dance.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container tagrpo">
+                    <span class="method-label">TAGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample6TA.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3">
+            <div class="prompt-box">
+                Prompt: A boy with a worried expression is walking down a residential street at sunset, holding a small object in his right hand. He continues to walk while looking at the object, his expression remaining anxious. The boy then lowers the object to his side and starts to run forward, his mouth open as if speaking. The background shows houses with green roofs, a fence, and trees, all under a warm, orange sky.
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container base">
+                    <span class="method-label">Base</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample7Base.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container dancegrpo">
+                    <span class="method-label">DanceGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample7Dance.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container tagrpo">
+                    <span class="method-label">TAGRPO</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample7TA.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <div id="ablation" class="section-divider py-8 sm:py-16">
+            <div class="flex-grow border-t-4 border-gray-800 rounded-full"></div>
+            <span class="flex-shrink-0 mx-4 sm:mx-6 text-gray-800 text-xl sm:text-2xl font-bold text-center">Ablation Study on <span class="italic font-serif">&gamma;</span></span>
+            <div class="flex-grow border-t-4 border-gray-800 rounded-full"></div>
+        </div>
+
+        <section class="space-y-3">
+            <div class="prompt-box">
+                Prompt: The video shows a close-up of a cluster of white flower buds with green stems against a dark background. As the frames progress, the buds begin to open, revealing the inner petals and stamens. The petals continue to unfold, fully opening to display the yellow stamens in the center. The stamens gradually extend upwards as the flower reaches its full bloom.
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container base">
+                    <span class="method-label"><span class="italic font-serif">&gamma;</span>=1</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample10Gamma1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container base">
+                    <span class="method-label"><span class="italic font-serif">&gamma;</span>=3</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample10Gamma3.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container base">
+                    <span class="method-label"><span class="italic font-serif">&gamma;</span>=5</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/111/FFF?text=Loading+Video">
+                        <source src="assets/Sample10Gamma5.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3">
+            <div class="prompt-box">
+                Prompt: The video shows a guinea pig enclosure with a cloud-patterned mat, a wooden bridge, a bowl of vegetables, and a hay container. A person is seen holding a wooden box containing two guinea pigs and places it into the enclosure. The white guinea pig exits the box and starts exploring the enclosure, while the brown and white guinea pig remains in the box. The white guinea pig moves towards the wooden bridge and eventually enters it. The brown and white guinea pig then exits the box and follows the white guinea pig.
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container base">
+                    <span class="method-label"><span class="italic font-serif">&gamma;</span>=1</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
+                        <source src="assets/Sample11Gamma1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container base">
+                    <span class="method-label"><span class="italic font-serif">&gamma;</span>=3</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
+                        <source src="assets/Sample11Gamma3.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container base">
+                    <span class="method-label"><span class="italic font-serif">&gamma;</span>=5</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/222/FFF?text=Loading+Video">
+                        <source src="assets/Sample11Gamma5.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3">
+            <div class="prompt-box">
+                Prompt: A woman, wearing an orange jacket and red shirt, is seen eating a fry with her right hand in a busy indoor setting. She then puts down her hand and drinks from a cup using a straw. After drinking, she extends her right hand forward and looks down at something. In the background, there are people moving around, including a person in a blue jacket and another in a green jacket with a fur-lined hood.
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="video-container base">
+                    <span class="method-label"><span class="italic font-serif">&gamma;</span>=1</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                        <source src="assets/Sample12Gamma1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container base">
+                    <span class="method-label"><span class="italic font-serif">&gamma;</span>=3</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                        <source src="assets/Sample12Gamma3.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-container base">
+                    <span class="method-label"><span class="italic font-serif">&gamma;</span>=5</span>
+                    <video autoplay loop muted playsinline webkit-playsinline poster="https://placehold.co/600x338/333/FFF?text=Loading+Video">
+                        <source src="assets/Sample12Gamma5.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer class="text-center py-8 text-slate-500 text-sm">
         &copy; 2025 TAGRPO Project. All rights reserved.
